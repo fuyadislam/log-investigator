@@ -1,0 +1,1718 @@
+{
+  "results": {
+    "firewall": {
+      "valid_events": 892,
+      "allowed": 522,
+      "blocked": 370,
+      "unique_sources": 202,
+      "external_sources": 150,
+      "top_blocked_sources": [
+        [
+          "203.0.113.55",
+          78
+        ],
+        [
+          "203.0.113.77",
+          23
+        ],
+        [
+          "198.51.100.77",
+          22
+        ],
+        [
+          "203.0.113.90",
+          20
+        ],
+        [
+          "192.168.1.34",
+          5
+        ]
+      ],
+      "top_ports": [
+        [
+          443,
+          104
+        ],
+        [
+          8080,
+          100
+        ],
+        [
+          80,
+          93
+        ],
+        [
+          993,
+          90
+        ],
+        [
+          123,
+          87
+        ]
+      ],
+      "top_blocked_ports": [
+        [
+          22,
+          80
+        ],
+        [
+          443,
+          39
+        ],
+        [
+          8080,
+          35
+        ],
+        [
+          80,
+          32
+        ],
+        [
+          53,
+          31
+        ]
+      ]
+    },
+    "auth": {
+      "valid_events": 514,
+      "success": 313,
+      "failed": 163,
+      "logout": 33,
+      "locked": 5,
+      "locked_accounts": [
+        [
+          "admin",
+          5
+        ]
+      ],
+      "top_failed_sources": [
+        [
+          "198.51.100.23",
+          46
+        ],
+        [
+          "203.0.113.55",
+          20
+        ],
+        [
+          "203.0.113.77",
+          17
+        ],
+        [
+          "192.168.1.20",
+          4
+        ],
+        [
+          "192.168.1.30",
+          3
+        ]
+      ],
+      "top_targeted_users": [
+        [
+          "admin",
+          52
+        ],
+        [
+          "svc_backup",
+          28
+        ],
+        [
+          "root",
+          15
+        ],
+        [
+          "bob",
+          14
+        ],
+        [
+          "carol",
+          14
+        ]
+      ]
+    },
+    "findings": [
+      {
+        "severity": "HIGH",
+        "title": "Login success after repeated failures",
+        "subject": "203.0.113.77",
+        "evidence_count": 17,
+        "explanation": "17 failed logins then a success as admin on vpn01 at 2026-10-12 14:51:00. Could be a guessed password, or just a user who mistyped. This IP is also on the suspicious list.",
+        "rank": 1
+      },
+      {
+        "severity": "HIGH",
+        "title": "Successful login from watchlisted IP",
+        "subject": "198.51.100.18",
+        "evidence_count": 1,
+        "explanation": "svc_backup logged in to files01 with ssh_key at 2026-10-12 08:12:20. The IP is on the suspicious list, so check if this login was expected.",
+        "rank": 2
+      },
+      {
+        "severity": "HIGH",
+        "title": "Brute-force login attempts",
+        "subject": "198.51.100.23",
+        "evidence_count": 46,
+        "explanation": "Up to 16 failures inside 30 min, 46 in total, against admin, administrator, root, svc_backup. Active from 2026-10-12 09:00:00 to 2026-10-12 10:30:00.",
+        "rank": 3
+      },
+      {
+        "severity": "HIGH",
+        "title": "Brute-force login attempts",
+        "subject": "203.0.113.77",
+        "evidence_count": 17,
+        "explanation": "Up to 11 failures inside 30 min, 17 in total, against admin. Active from 2026-10-12 14:00:00 to 2026-10-12 14:48:00.",
+        "rank": 4
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "IP active in both firewall and auth logs",
+        "subject": "203.0.113.55",
+        "evidence_count": 98,
+        "explanation": "78 blocked connection(s) and 20 failed login(s). Same source hitting the network and the login service is a stronger sign than either alone.",
+        "rank": 5
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "IP active in both firewall and auth logs",
+        "subject": "198.51.100.23",
+        "evidence_count": 47,
+        "explanation": "1 blocked connection(s) and 46 failed login(s). Same source hitting the network and the login service is a stronger sign than either alone.",
+        "rank": 6
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "IP active in both firewall and auth logs",
+        "subject": "203.0.113.77",
+        "evidence_count": 40,
+        "explanation": "23 blocked connection(s) and 17 failed login(s). Same source hitting the network and the login service is a stronger sign than either alone.",
+        "rank": 7
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Account locked out",
+        "subject": "admin",
+        "evidence_count": 5,
+        "explanation": "'admin' was locked 5 time(s). Lockouts show the guessing was stopped, but repeated ones mean the attack kept coming back.",
+        "rank": 8
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Many usernames tried from one IP",
+        "subject": "198.51.100.23",
+        "evidence_count": 46,
+        "explanation": "4 different users tried (admin, administrator, root, svc_backup). Guessing across accounts looks like spraying or a username list.",
+        "rank": 9
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Blocked on many ports (possible scan)",
+        "subject": "203.0.113.90",
+        "evidence_count": 20,
+        "explanation": "Blocked on 20 ports: 21, 22, 23, 25, 53, 80, 110, 135, 139, 143, 443, 445, 993, 995, 1433, 3306, 3389, 5432, 5900, 8080.",
+        "rank": 10
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Watchlisted IP allowed through firewall",
+        "subject": "198.51.100.77",
+        "evidence_count": 8,
+        "explanation": "8 connection(s) from this IP were ALLOWED. Check what they reached.",
+        "rank": 11
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Watchlisted IP allowed through firewall",
+        "subject": "198.51.100.18",
+        "evidence_count": 2,
+        "explanation": "2 connection(s) from this IP were ALLOWED. Check what they reached.",
+        "rank": 12
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Watchlisted IP allowed through firewall",
+        "subject": "203.0.113.77",
+        "evidence_count": 2,
+        "explanation": "2 connection(s) from this IP were ALLOWED. Check what they reached.",
+        "rank": 13
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Watchlisted IP allowed through firewall",
+        "subject": "203.0.113.12",
+        "evidence_count": 1,
+        "explanation": "1 connection(s) from this IP were ALLOWED. Check what they reached.",
+        "rank": 14
+      },
+      {
+        "severity": "MEDIUM",
+        "title": "Watchlisted IP allowed through firewall",
+        "subject": "203.0.113.55",
+        "evidence_count": 1,
+        "explanation": "1 connection(s) from this IP were ALLOWED. Check what they reached.",
+        "rank": 15
+      },
+      {
+        "severity": "LOW",
+        "title": "Blocked attempts on admin/database ports",
+        "subject": "203.0.113.55",
+        "evidence_count": 78,
+        "explanation": "Ports 22. The firewall stopped these, worth keeping an eye on but no sign they got through.",
+        "rank": 16
+      },
+      {
+        "severity": "LOW",
+        "title": "Blocked attempts on admin/database ports",
+        "subject": "203.0.113.90",
+        "evidence_count": 6,
+        "explanation": "Ports 22, 23, 445, 3306, 3389, 5432. The firewall stopped these, worth keeping an eye on but no sign they got through.",
+        "rank": 17
+      },
+      {
+        "severity": "LOW",
+        "title": "Blocked attempts on admin/database ports",
+        "subject": "203.0.113.77",
+        "evidence_count": 6,
+        "explanation": "Ports 22, 3389. The firewall stopped these, worth keeping an eye on but no sign they got through.",
+        "rank": 18
+      },
+      {
+        "severity": "LOW",
+        "title": "Blocked attempts on admin/database ports",
+        "subject": "203.0.113.20",
+        "evidence_count": 1,
+        "explanation": "Ports 3389. The firewall stopped these, worth keeping an eye on but no sign they got through.",
+        "rank": 19
+      },
+      {
+        "severity": "LOW",
+        "title": "Blocked attempts on admin/database ports",
+        "subject": "203.0.113.11",
+        "evidence_count": 1,
+        "explanation": "Ports 3389. The firewall stopped these, worth keeping an eye on but no sign they got through.",
+        "rank": 20
+      },
+      {
+        "severity": "LOW",
+        "title": "Watchlisted IP not seen in logs",
+        "subject": "192.0.2.44",
+        "evidence_count": 0,
+        "explanation": "No activity in these logs. Doesn't mean it's safe, it may just not have shown up yet.",
+        "rank": 21
+      }
+    ],
+    "ip_risk": [
+      {
+        "ip": "203.0.113.55",
+        "score": 138,
+        "level": "HIGH",
+        "internal": false,
+        "on_watchlist": true,
+        "blocked": 78,
+        "failed_logins": 20,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.23",
+        "score": 138,
+        "level": "HIGH",
+        "internal": false,
+        "on_watchlist": true,
+        "blocked": 1,
+        "failed_logins": 46,
+        "lockouts": 5
+      },
+      {
+        "ip": "203.0.113.77",
+        "score": 122,
+        "level": "HIGH",
+        "internal": false,
+        "on_watchlist": true,
+        "blocked": 23,
+        "failed_logins": 17,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.18",
+        "score": 36,
+        "level": "MEDIUM",
+        "internal": false,
+        "on_watchlist": true,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.77",
+        "score": 32,
+        "level": "MEDIUM",
+        "internal": false,
+        "on_watchlist": true,
+        "blocked": 22,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.90",
+        "score": 30,
+        "level": "MEDIUM",
+        "internal": false,
+        "on_watchlist": true,
+        "blocked": 20,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.20",
+        "score": 21,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 4,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.10",
+        "score": 21,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.31",
+        "score": 20,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.23",
+        "score": 19,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 2,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.25",
+        "score": 19,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.18",
+        "score": 19,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.22",
+        "score": 19,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.30",
+        "score": 18,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.12",
+        "score": 18,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.14",
+        "score": 18,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.19",
+        "score": 18,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.21",
+        "score": 18,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 3,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.34",
+        "score": 17,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.21",
+        "score": 17,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.26",
+        "score": 17,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.11",
+        "score": 17,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.40",
+        "score": 17,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.17",
+        "score": 17,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.14",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.37",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.27",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.11",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 2,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.24",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.39",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.29",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.20",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.30",
+        "score": 16,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.13",
+        "score": 15,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.16",
+        "score": 15,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.22",
+        "score": 15,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.29",
+        "score": 14,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.38",
+        "score": 14,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.15",
+        "score": 14,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.27",
+        "score": 14,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.18",
+        "score": 14,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.26",
+        "score": 14,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.32",
+        "score": 13,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.42",
+        "score": 13,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.28",
+        "score": 13,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.37",
+        "score": 13,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.81",
+        "score": 13,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.13",
+        "score": 13,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.19",
+        "score": 5,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 5,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.33",
+        "score": 4,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.16",
+        "score": 4,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.35",
+        "score": 4,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.15",
+        "score": 4,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 4,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.28",
+        "score": 4,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 2,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.17",
+        "score": 3,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.12",
+        "score": 3,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.25",
+        "score": 3,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.23",
+        "score": 3,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.70",
+        "score": 3,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 3,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.36",
+        "score": 2,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.47",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.11",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.44",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.24",
+        "score": 2,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 2,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.25",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.99",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.35",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.24",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.63",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.51",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.66",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.23",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.65",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.46",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.11",
+        "score": 2,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 0,
+        "failed_logins": 1,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.55",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.94",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.65",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.47",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.87",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "10.0.0.28",
+        "score": 1,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.60",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.20",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.57",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.29",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.98",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.88",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.15",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.40",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.89",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.95",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.82",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.43",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.30",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.26",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.39",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.85",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.74",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.72",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.54",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.71",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.58",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.18",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.68",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.61",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.49",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.69",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.96",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.84",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.99",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.33",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.31",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.21",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.62",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.84",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.33",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.72",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.68",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.74",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "198.51.100.81",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.80",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "203.0.113.14",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.168.1.10",
+        "score": 1,
+        "level": "LOW",
+        "internal": true,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.10",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.67",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.23",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      },
+      {
+        "ip": "192.0.2.66",
+        "score": 1,
+        "level": "LOW",
+        "internal": false,
+        "on_watchlist": false,
+        "blocked": 1,
+        "failed_logins": 0,
+        "lockouts": 0
+      }
+    ],
+    "watchlist": [
+      {
+        "ip": "192.0.2.44",
+        "fw_allowed": 0,
+        "fw_blocked": 0,
+        "auth_failed": 0,
+        "auth_success": []
+      },
+      {
+        "ip": "198.51.100.18",
+        "fw_allowed": 2,
+        "fw_blocked": 1,
+        "auth_failed": 0,
+        "auth_success": [
+          {
+            "time": "2026-10-12 08:12:20",
+            "event": "LOGIN_SUCCESS",
+            "user": "svc_backup",
+            "src": "198.51.100.18",
+            "host": "files01",
+            "method": "ssh_key"
+          }
+        ]
+      },
+      {
+        "ip": "198.51.100.23",
+        "fw_allowed": 0,
+        "fw_blocked": 1,
+        "auth_failed": 46,
+        "auth_success": []
+      },
+      {
+        "ip": "198.51.100.77",
+        "fw_allowed": 8,
+        "fw_blocked": 22,
+        "auth_failed": 0,
+        "auth_success": []
+      },
+      {
+        "ip": "203.0.113.12",
+        "fw_allowed": 1,
+        "fw_blocked": 0,
+        "auth_failed": 0,
+        "auth_success": []
+      },
+      {
+        "ip": "203.0.113.55",
+        "fw_allowed": 1,
+        "fw_blocked": 78,
+        "auth_failed": 20,
+        "auth_success": []
+      },
+      {
+        "ip": "203.0.113.77",
+        "fw_allowed": 2,
+        "fw_blocked": 23,
+        "auth_failed": 17,
+        "auth_success": [
+          {
+            "time": "2026-10-12 14:51:00",
+            "event": "LOGIN_SUCCESS",
+            "user": "admin",
+            "src": "203.0.113.77",
+            "host": "vpn01",
+            "method": "password"
+          }
+        ]
+      },
+      {
+        "ip": "203.0.113.90",
+        "fw_allowed": 0,
+        "fw_blocked": 20,
+        "auth_failed": 0,
+        "auth_success": []
+      }
+    ]
+  },
+  "skipped_lines": {
+    "firewall.log": [
+      {
+        "line": 308,
+        "reason": "empty field 'src'",
+        "text": "2026-10-13 09:44:11 BLOCKED src= dst=10.0.0.8 proto=TCP port=22"
+      },
+      {
+        "line": 487,
+        "reason": "empty field 'dst'",
+        "text": "2026-10-14 11:00:00 ALLOWED src=192.168.1.24 dst= proto=TCP port=443 bytes=500"
+      },
+      {
+        "line": 623,
+        "reason": "unknown action 'UNKNOWN'",
+        "text": "2026-10-15 12:00:00 UNKNOWN src=192.168.1.14 dst=10.0.0.9 proto=TCP port=9999 bytes=123"
+      },
+      {
+        "line": 633,
+        "reason": "bad source ip 'not_an_ip'",
+        "text": "2026-10-15 13:22:11 BLOCKED src=not_an_ip dst=10.0.0.9 proto=TCP port=22 bytes=0"
+      },
+      {
+        "line": 754,
+        "reason": "bad port 'notaport'",
+        "text": "2026-10-16 08:00:00 ALLOWED src=192.168.1.12 dst=10.0.0.8 proto=TCP port=notaport bytes=250"
+      },
+      {
+        "line": 898,
+        "reason": "bad or missing timestamp",
+        "text": "MALFORMED LINE - missing timestamp and fields"
+      },
+      {
+        "line": 899,
+        "reason": "bad or missing timestamp",
+        "text": "2026-10-14 BADTIME BLOCKED src=203.0.113.41 dst=10.0.0.9 proto=TCP port=80 bytes=0"
+      }
+    ],
+    "authentication.log": [
+      {
+        "line": 249,
+        "reason": "empty field 'user'",
+        "text": "2026-10-14 09:00:00 LOGIN_FAILED user= src=198.51.100.88 host=web01 method=password"
+      },
+      {
+        "line": 424,
+        "reason": "bad source ip 'not_an_ip'",
+        "text": "2026-10-16 10:00:00 LOGIN_FAILED user=admin src=not_an_ip host=vpn01 method=password"
+      },
+      {
+        "line": 432,
+        "reason": "unknown event 'UNKNOWN'",
+        "text": "2026-10-16 11:30:00 UNKNOWN user=bob src=192.168.1.22 host=app01 method=password"
+      },
+      {
+        "line": 518,
+        "reason": "bad or missing timestamp",
+        "text": "MALFORMED AUTH LINE"
+      },
+      {
+        "line": 519,
+        "reason": "bad or missing timestamp",
+        "text": "2026-10-15 BADTIME LOGIN_SUCCESS user=alice src=192.168.1.20 host=web01 method=sso"
+      }
+    ]
+  }
+}

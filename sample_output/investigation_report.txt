@@ -1,0 +1,123 @@
+======================================================================
+ SECURITY LOG INVESTIGATION REPORT
+ generated: 2026-11-11 20:08:33
+======================================================================
+ firewall log : data/firewall.log
+ auth log     : data/authentication.log
+ watchlist    : data/suspicious_ips.txt (8 IPs)
+
+[ DATA QUALITY ]
+  firewall.log: 7 line(s) skipped
+    line 308: empty field 'src'
+    line 487: empty field 'dst'
+    line 623: unknown action 'UNKNOWN'
+    line 633: bad source ip 'not_an_ip'
+    line 754: bad port 'notaport'
+    line 898: bad or missing timestamp
+    line 899: bad or missing timestamp
+  authentication.log: 5 line(s) skipped
+    line 249: empty field 'user'
+    line 424: bad source ip 'not_an_ip'
+    line 432: unknown event 'UNKNOWN'
+    line 518: bad or missing timestamp
+    line 519: bad or missing timestamp
+
+[ FIREWALL SUMMARY ]
+  valid events      : 892
+  ALLOWED / BLOCKED : 522 / 370
+  unique source IPs : 202 (150 external)
+  top blocked source IPs:
+    203.0.113.55         78 blocked
+    203.0.113.77         23 blocked
+    198.51.100.77        22 blocked
+    203.0.113.90         20 blocked
+    192.168.1.34          5 blocked
+  most targeted ports (all traffic):
+    443                 104 events
+    8080                100 events
+    80                   93 events
+    993                  90 events
+    123                  87 events
+  most blocked ports:
+    22                   80 blocked
+    443                  39 blocked
+    8080                 35 blocked
+    80                   32 blocked
+    53                   31 blocked
+
+[ AUTHENTICATION SUMMARY ]
+  valid events   : 514
+  LOGIN_SUCCESS  : 313
+  LOGIN_FAILED   : 163
+  ACCOUNT_LOCKED : 5
+  LOGOUT         : 33
+  top failed-login source IPs:
+    198.51.100.23        46 failed
+    203.0.113.55         20 failed
+    203.0.113.77         17 failed
+    192.168.1.20          4 failed
+    192.168.1.30          3 failed
+  most targeted usernames:
+    admin                52 failed
+    svc_backup           28 failed
+    root                 15 failed
+    bob                  14 failed
+    carol                14 failed
+
+[ RANKED FINDINGS ]
+  #1  [HIGH] Login success after repeated failures - 203.0.113.77 (evidence: 17)
+       17 failed logins then a success as admin on vpn01 at 2026-10-12 14:51:00. Could be a guessed password, or just a user who mistyped. This IP is also on the suspicious list.
+  #2  [HIGH] Successful login from watchlisted IP - 198.51.100.18 (evidence: 1)
+       svc_backup logged in to files01 with ssh_key at 2026-10-12 08:12:20. The IP is on the suspicious list, so check if this login was expected.
+  #3  [HIGH] Brute-force login attempts - 198.51.100.23 (evidence: 46)
+       Up to 16 failures inside 30 min, 46 in total, against admin, administrator, root, svc_backup. Active from 2026-10-12 09:00:00 to 2026-10-12 10:30:00.
+  #4  [HIGH] Brute-force login attempts - 203.0.113.77 (evidence: 17)
+       Up to 11 failures inside 30 min, 17 in total, against admin. Active from 2026-10-12 14:00:00 to 2026-10-12 14:48:00.
+  #5  [MEDIUM] IP active in both firewall and auth logs - 203.0.113.55 (evidence: 98)
+       78 blocked connection(s) and 20 failed login(s). Same source hitting the network and the login service is a stronger sign than either alone.
+  #6  [MEDIUM] IP active in both firewall and auth logs - 198.51.100.23 (evidence: 47)
+       1 blocked connection(s) and 46 failed login(s). Same source hitting the network and the login service is a stronger sign than either alone.
+  #7  [MEDIUM] IP active in both firewall and auth logs - 203.0.113.77 (evidence: 40)
+       23 blocked connection(s) and 17 failed login(s). Same source hitting the network and the login service is a stronger sign than either alone.
+  #8  [MEDIUM] Account locked out - admin (evidence: 5)
+       'admin' was locked 5 time(s). Lockouts show the guessing was stopped, but repeated ones mean the attack kept coming back.
+  #9  [MEDIUM] Many usernames tried from one IP - 198.51.100.23 (evidence: 46)
+       4 different users tried (admin, administrator, root, svc_backup). Guessing across accounts looks like spraying or a username list.
+  #10 [MEDIUM] Blocked on many ports (possible scan) - 203.0.113.90 (evidence: 20)
+       Blocked on 20 ports: 21, 22, 23, 25, 53, 80, 110, 135, 139, 143, 443, 445, 993, 995, 1433, 3306, 3389, 5432, 5900, 8080.
+  #11 [MEDIUM] Watchlisted IP allowed through firewall - 198.51.100.77 (evidence: 8)
+       8 connection(s) from this IP were ALLOWED. Check what they reached.
+  #12 [MEDIUM] Watchlisted IP allowed through firewall - 198.51.100.18 (evidence: 2)
+       2 connection(s) from this IP were ALLOWED. Check what they reached.
+  #13 [MEDIUM] Watchlisted IP allowed through firewall - 203.0.113.77 (evidence: 2)
+       2 connection(s) from this IP were ALLOWED. Check what they reached.
+  #14 [MEDIUM] Watchlisted IP allowed through firewall - 203.0.113.12 (evidence: 1)
+       1 connection(s) from this IP were ALLOWED. Check what they reached.
+  #15 [MEDIUM] Watchlisted IP allowed through firewall - 203.0.113.55 (evidence: 1)
+       1 connection(s) from this IP were ALLOWED. Check what they reached.
+  #16 [LOW] Blocked attempts on admin/database ports - 203.0.113.55 (evidence: 78)
+       Ports 22. The firewall stopped these, worth keeping an eye on but no sign they got through.
+  #17 [LOW] Blocked attempts on admin/database ports - 203.0.113.90 (evidence: 6)
+       Ports 22, 23, 445, 3306, 3389, 5432. The firewall stopped these, worth keeping an eye on but no sign they got through.
+  #18 [LOW] Blocked attempts on admin/database ports - 203.0.113.77 (evidence: 6)
+       Ports 22, 3389. The firewall stopped these, worth keeping an eye on but no sign they got through.
+  #19 [LOW] Blocked attempts on admin/database ports - 203.0.113.20 (evidence: 1)
+       Ports 3389. The firewall stopped these, worth keeping an eye on but no sign they got through.
+  #20 [LOW] Blocked attempts on admin/database ports - 203.0.113.11 (evidence: 1)
+       Ports 3389. The firewall stopped these, worth keeping an eye on but no sign they got through.
+  #21 [LOW] Watchlisted IP not seen in logs - 192.0.2.44 (evidence: 0)
+       No activity in these logs. Doesn't mean it's safe, it may just not have shown up yet.
+
+[ TOP RISK IPs ]
+  IP               level   score  blocked  failed  locks  notes
+  203.0.113.55     HIGH      138       78      20      0  watchlist
+  198.51.100.23    HIGH      138        1      46      5  watchlist
+  203.0.113.77     HIGH      122       23      17      0  watchlist
+  198.51.100.18    MEDIUM     36        1       0      0  watchlist
+  198.51.100.77    MEDIUM     32       22       0      0  watchlist
+  203.0.113.90     MEDIUM     30       20       0      0  watchlist
+  192.168.1.20     LOW        21        3       4      0  internal
+  10.0.0.10        LOW        21        5       3      0  internal
+  192.168.1.31     LOW        20        4       3      0  internal
+  192.168.1.23     LOW        19        5       2      0  internal
+======================================================================
