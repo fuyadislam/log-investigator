@@ -34,6 +34,8 @@ python log_investigator.py
 
 This uses the files in `data/` and saves the reports in `output/`.
 
+On macOS and Linux use `python3` instead of `python` (e.g. `python3 log_investigator.py`). On Windows it's `python` or `py`.
+
 Options:
 
 | option | default | what it does |
