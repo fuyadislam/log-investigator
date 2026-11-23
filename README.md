@@ -212,6 +212,6 @@ docs/                 workflow diagram
 - The watchlist is only as good as whoever wrote it. An IP not being on it doesn't make it safe.
 - It only reads these two log formats.
 
-## Where AI came in
+## AI use
 
-I built this with help from Claude (Anthropic), which I used for writing the code and this README. I ran every command here on my own MacBook and checked the findings against the raw log lines before submitting. I can walk through any part of it.
+I used Claude (Anthropic) as an assistant while building this project. I ran and tested everything myself on my MacBook and checked the results against the raw logs.
